@@ -11,10 +11,19 @@ Writing a test is just like writing a function, with a few rules
 
 func TestHello(t *testing.T) {
 
-	//We need to pass in t *testing.T so that we can tell the test code to fail when we need to.
-	//t.Helper() is needed to tell the test suite that this method is a helper.
-	//By doing this when it fails the line number reported will be in our function call rather than inside our test helper.
+	// We need to pass in t *testing.T so that we can tell the test code to fail when we need to.
+	// t.Helper() is needed to tell the test suite that this method is a helper.
+	// By doing this when it fails the line number reported will be in our function call rather than inside our test helper.
 	assertCorrectMessage := func(t *testing.T, got, want string) {
+		t.Helper()
+		if got != want {
+			t.Errorf("got %q want %q", got, want)
+		}
+	}
+
+	// When you have more than one argument of the same type (in our case two integers)
+	// rather than having (x int, y int) you can shorten it to (x, y int)!!
+	assertCorrectNumber := func(t *testing.T, got, want int) {
 		t.Helper()
 		if got != want {
 			t.Errorf("got %q want %q", got, want)
@@ -43,6 +52,12 @@ func TestHello(t *testing.T) {
 		got := hello("Elo", "French")
 		want := "Bonjour, Elo"
 		assertCorrectMessage(t, got, want)
+	})
+
+	t.Run("ich kann addieren", func(t *testing.T) {
+		got := add(2, 2)
+		want := 4
+		assertCorrectNumber(t, got, want)
 	})
 
 }

@@ -13,19 +13,28 @@ func hello(input string, language string) string {
 		input = "World"
 	}
 
-	if language == "Spanish" {
-		return spanishHelloPrefix + input
+	varHello := englishHelloPrefix
+
+	switch language {
+	case "French":
+		varHello = frenchHelloPrefix
+	case "Spanish":
+		varHello = spanishHelloPrefix
 	}
 
-	if language == "French" {
-		return frenchHelloPrefix + input
-	}
+	return varHello + input
+}
 
-	return englishHelloPrefix + input
+func add(a int, b int) int {
+
+	result := a + b
+	return result
+
 }
 
 func main() {
 
 	fmt.Println(hello("", ""))
+	fmt.Println(add(2, 3))
 
 }
